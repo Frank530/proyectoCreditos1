@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 public class Detalle implements Serializable {
     
     @Id
-    private int id;
+    private Long id;
     private String cantidad;
     @OneToMany
     @JoinColumn(name ="fk_factura")
@@ -27,18 +27,18 @@ public class Detalle implements Serializable {
         
     }
 
-    public Detalle(int id, String cantidad, List<Factura> idFactura, List<Producto> idProducto) {
+    public Detalle(Long id, String cantidad, List<Factura> idFactura, List<Producto> idProducto) {
         this.id = id;
         this.cantidad = cantidad;
         this.idFactura = idFactura;
         this.idProducto = idProducto;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

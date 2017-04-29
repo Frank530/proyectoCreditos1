@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 public class Factura implements Serializable {
     
     @Id  
-    private int id;
+    private Long id;
     private String numFactura;
     private String fecha;
     
@@ -28,18 +28,18 @@ public class Factura implements Serializable {
         
     }
 
-    public Factura(int id, String numFactura, String fecha, List<Cliente> idCliente) {
+    public Factura(Long id, String numFactura, String fecha, List<Cliente> idCliente) {
         this.id = id;
         this.numFactura = numFactura;
         this.fecha = fecha;
         this.idCliente = idCliente;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

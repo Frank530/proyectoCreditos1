@@ -5,10 +5,13 @@
  */
 package co.edu.ims.servicio.res;
 
+import co.ims.soa.sswcompraventa.modelo.Categoria;
 import co.ims.soa.sswcompraventa.modelo.Detalle;
-import co.ims.soa.sswcompraventa.modelo.PersistenciaDetalle;
+
 import java.util.Collection;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,44 +29,28 @@ import javax.ws.rs.core.Response;
 @Path("/detalles")
 @Produces("application/json")
 public class DetalleRest {
-       @Inject PersistenciaDetalle persistenciaDetalle;
-
+      @PersistenceContext(unitName = "compraventaPU")
+    protected EntityManager em;
     @GET
+     @Path("{id}")
     @Produces("application/json")
-    public Collection<Detalle> listar() {		
-        return persistenciaDetalle.listarDetalle();
+    public Detalle buscar(@PathParam("id") Integer pId) {		
+        return em.find(Detalle.class, pId);
+   
     }
 
-    @GET
-    @Path("{id}")
-    @Produces("application/json")
-    public Detalle buscar(@PathParam("id") Long pId ) {
-        System.out.println("buscando el  detalle por id: "+pId);
-        return persistenciaDetalle.buscarDetalle(pId);
-    }
 
-    @PUT
-    @Consumes("application/json")
-    @Produces("application/json")	
-    public Detalle agregar(Detalle cat){
-        persistenciaDetalle.crearDetalle(cat);
-        return cat;
-    }
-
-    @DELETE
-    @Path("{id}")
-    public Response borrar(@PathParam("id") Long pId ) {
-    System.out.println("eliminando Detalle por id:"+ pId);
-        persistenciaDetalle.elminiarDetalle(pId);
-        return Response.noContent().build();
-    }
-
-    @POST
+      @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public Detalle actualizar(Detalle cat) {
-        persistenciaDetalle.actualizarDetalle(cat);
-        return cat;
+    public Detalle agregar(Detalle entity){
+        em.persist(entity);
+        em.flush();
+        return entity;
     }
+
+  
+
+//    
     
 }

@@ -57,7 +57,7 @@ public class Producto implements Serializable {
     public void setValor(int valor) {
         this.valor = valor;
     }
-
+    
     public List<Categoria> getIdCategoria() {
         return idCategoria;
     }
@@ -65,5 +65,7 @@ public class Producto implements Serializable {
     public void setIdCategoria(List<Categoria> idCategoria) {
         this.idCategoria = idCategoria;
     }
+
     
-}
+    
+} 

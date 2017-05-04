@@ -5,6 +5,7 @@ import co.ims.soa.sswcompraventa.modelo.Categoria;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 @Stateless
 @Path("/categorias")

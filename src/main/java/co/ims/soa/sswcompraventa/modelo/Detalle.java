@@ -1,11 +1,12 @@
 package co.ims.soa.sswcompraventa.modelo;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 /**
  * @author Silvia
@@ -13,21 +14,21 @@ import javax.persistence.OneToMany;
 @Entity
 public class Detalle implements Serializable {
     
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cantidad;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name ="fk_factura")
-    private List <Factura> idFactura;
-    @OneToMany
+    private Factura idFactura;
+    @ManyToOne
     @JoinColumn(name = "fk_producto")
-    private List <Producto> idProducto;
+    private Producto idProducto;
     
     public Detalle(){
         
     }
 
-    public Detalle(Long id, String cantidad, List<Factura> idFactura, List<Producto> idProducto) {
+    public Detalle(Long id, String cantidad, Factura idFactura, Producto idProducto) {
         this.id = id;
         this.cantidad = cantidad;
         this.idFactura = idFactura;
@@ -50,19 +51,19 @@ public class Detalle implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public List<Factura> getIdFactura() {
+    public Factura getIdFactura() {
         return idFactura;
     }
 
-    public void setIdFactura(List<Factura> idFactura) {
+    public void setIdFactura(Factura idFactura) {
         this.idFactura = idFactura;
     }
 
-    public List<Producto> getIdProducto() {
+    public Producto getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(List<Producto> idProducto) {
+    public void setIdProducto(Producto idProducto) {
         this.idProducto = idProducto;
     }
     

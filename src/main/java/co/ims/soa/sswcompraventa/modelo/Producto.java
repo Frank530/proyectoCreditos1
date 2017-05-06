@@ -1,11 +1,13 @@
 package co.ims.soa.sswcompraventa.modelo;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+
 
 
 /**
@@ -15,19 +17,19 @@ import javax.persistence.OneToMany;
 @Entity
 public class Producto implements Serializable {
 
-    @Id 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;//id 
     private String descripcion;
     private int valor;
-    @OneToMany 
+    @ManyToOne 
     @JoinColumn(name ="fk_categoria")
-    private List <Categoria> idCategoria;
+    private Categoria idCategoria;
     
     public Producto(){
         
     }
 
-    public Producto(Long id, String descripcion, int valor, List<Categoria> idCategoria) {
+    public Producto(Long id, String descripcion, int valor, Categoria idCategoria) {
         this.id = id;
         this.descripcion = descripcion;
         this.valor = valor;
@@ -58,14 +60,11 @@ public class Producto implements Serializable {
         this.valor = valor;
     }
     
-    public List<Categoria> getIdCategoria() {
+    public Categoria getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(List<Categoria> idCategoria) {
+    public void setIdCategoria(Categoria idCategoria) {
         this.idCategoria = idCategoria;
     }
-
-    
-    
 } 

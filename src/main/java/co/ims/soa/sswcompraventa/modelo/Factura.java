@@ -1,12 +1,12 @@
 package co.ims.soa.sswcompraventa.modelo;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -16,19 +16,19 @@ import javax.persistence.OneToMany;
 @Entity
 public class Factura implements Serializable {
     
-    @Id  
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String numFactura;
     private String fecha;
     
-    @OneToMany
+    @ManyToOne
     @JoinColumn( name = "fk_cliente")
-    private List <Cliente> idCliente;
+    private Cliente idCliente;
     public Factura(){
         
     }
 
-    public Factura(Long id, String numFactura, String fecha, List<Cliente> idCliente) {
+    public Factura(Long id, String numFactura, String fecha, Cliente idCliente) {
         this.id = id;
         this.numFactura = numFactura;
         this.fecha = fecha;
@@ -59,14 +59,12 @@ public class Factura implements Serializable {
         this.fecha = fecha;
     }
 
-    public List<Cliente> getIdCliente() {
+    public Cliente getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(List<Cliente> idCliente) {
+    public void setIdCliente(Cliente idCliente) {
         this.idCliente = idCliente;
-    }
-    
-    
+    }   
     
 }

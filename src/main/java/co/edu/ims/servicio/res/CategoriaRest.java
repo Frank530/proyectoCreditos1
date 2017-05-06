@@ -2,10 +2,11 @@ package co.edu.ims.servicio.res;
 
 import javax.ws.rs.*;
 import co.ims.soa.sswcompraventa.modelo.Categoria;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 
 @Stateless
 @Path("/categorias")
@@ -29,6 +30,14 @@ public class CategoriaRest {
         em.flush();
         return entity;
     }
-
-    //Eliminar - Actualizar
+    
+    @GET 
+    @Produces("Aplication/json")
+    public List <Categoria> buscar(){
+        String jpql = "SELECT c FROM categoria c";
+        TypedQuery <Categoria> q = em.createQuery(jpql,Categoria.class);
+        List <Categoria> resultado = q.getResultList();
+        return resultado;
+    }
+    
 }

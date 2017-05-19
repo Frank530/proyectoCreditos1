@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Categorias</title>
+    </h:head>
+    <h:body>
+        <h1>Categorias</h1>
+        <div class="ui-g">
+            <p:panel  id="basic" header="Categorias">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:dataTable id="categorias" var="cat" value="#{categoriaBean.categorias}">
+                        <p:column headerText="Id">
+                            <h:outputText value="#{cat.id}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{cat.descripcion}" />
+                        </p:column>
+                    </p:dataTable> 
+                </h:panelGrid>
+            
+            
+           
+                
+            </p:panel>
+        </div>
+         <h:form>
+                <p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" style="width: 40%">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Id:"/>
+                        <h:inputText value="#{categoriaBean.categoria.id}"/>
+                        <h:outputLabel value="Nombre: "/>
+                        <h:inputText value="#{categoriaBean.categoria.descripcion}"  />
+                        <h:outputLabel value=""/>
+                        <p:commandButton value="Guardar" action="#{categoriaBean.guardar()}" update="@form"/>                 
+                        <p:commandButton value="Actualizar" action="#{categoriaBean.actualizar()}" update="@form"/>                 
+                        
+                    </h:panelGrid>
+                </p:fieldset> 
+             
+            </h:form>
+    </h:body>
+</html>
+

@@ -1,12 +1,14 @@
 package co.edu.ims.servicio.res;
 
-import javax.ws.rs.*;
 import co.ims.soa.sswcompraventa.modelo.Categoria;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 
 @Stateless
 @Path("/categorias")
@@ -14,6 +16,8 @@ public class CategoriaRest {
 
     @PersistenceContext(unitName = "compraventaPU")
     protected EntityManager em;
+    
+    @Inject SingletonEJB singletonEJB; 
 
     @GET
     @Path("{id}")
@@ -32,12 +36,47 @@ public class CategoriaRest {
     }
     
     @GET 
-    @Produces("Aplication/json")
+    @Produces("application/json")
     public List <Categoria> buscar(){
-        String jpql = "SELECT c FROM categoria c";
+        String jpql = "SELECT c FROM Categoria c";
         TypedQuery <Categoria> q = em.createQuery(jpql,Categoria.class);
         List <Categoria> resultado = q.getResultList();
         return resultado;
+    }
+    
+    @DELETE
+    @Path("{id}")
+    @Produces("application/json")
+    public Response elminar(@PathParam("id") Integer pId){
+        Categoria p = em.find(Categoria.class, pId);
+        if( p != null){
+            em.remove(p);
+        }
+        
+        singletonEJB.incrementarCodigo();
+        System.out.println(singletonEJB.getCodigoOperacion());
+        return Response.noContent().build();
+    }
+
+    @POST
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Categoria actualizar(Categoria p){
+        em.merge(p);  
+        singletonEJB.incrementarCodigo();
+        System.out.println(singletonEJB.getCodigoOperacion());
+        return p;
+    }
+ 
+    @GET
+    @Path("/descripcion/{nombre}")
+    @Produces("application/json")       
+    public List<Categoria> buscarPorNombre(@PathParam("nombre") String nombre){                
+        String jpql = "SELECT c FROM Categoria c WHERE c.descripcion LIKE :cDescripcion ";        
+        TypedQuery<Categoria> q = em.createQuery(jpql, Categoria.class);
+        q.setParameter("cDescripcion", "%"+nombre+"%");
+        List<Categoria> resultado = q.getResultList();        
+        return resultado;              
     }
     
 }

@@ -4,9 +4,12 @@ package co.edu.ims.servicio.res;
 import javax.ws.rs.*;
 
 import co.ims.soa.sswcompraventa.modelo.Cliente;
+import co.ims.soa.sswcompraventa.modelo.Factura;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Stateless
 @Path("/clientes")

@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Categorias</title>
+    </h:head>
+    <h:body>
+        <h1>Categorias</h1>
+        <div class="ui-g">
+            <p:panel  id="basic" header="Categorias">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:dataTable id="categorias" var="det" value="#{detalleBean.detalles}">
+                        <p:column headerText="Id">
+                            <h:outputText value="#{det.id}" />
+                        </p:column>
+
+                        <p:column headerText="Factura">
+                            <h:outputText value="#{det.idFactura}" />
+                        </p:column>
+
+                        <p:column headerText="Producto">
+                            <h:outputText value="#{det.idProducto}" />
+                        </p:column>
+                        
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{det.cantidad}" />
+                        </p:column>
+                    </p:dataTable> 
+                </h:panelGrid>
+            </p:panel>
+        </div>
+         
+    </h:body>
+</html>
+

@@ -20,6 +20,7 @@ import javax.inject.Inject;
 @SessionScoped
 public class ProductoBean {
     @Inject ProductoRest productoRest;
+    @Inject CategoriaRest categoriaRest;
     
     private List<Producto> productos;    
     private Producto producto;
@@ -33,11 +34,18 @@ public class ProductoBean {
         producto = new Producto();
     }
     
-    public void guardar(){
+    public String guardar(){
         System.out.println("guardar...");
-        productoRest.agregar(producto);        
-        init();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto",  "Se ha guardado correctamente") );
+        Categoria c = categoriaRest.buscar(producto.getCategoria().getId());
+        if(c != null){
+             producto.setCategoria(c);
+            productoRest.agregar(producto);        
+            init();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto",  "Se ha guardado correctamente") );
+            return null;
+        }
+       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Advertencia",  "Categoria no encontrada") );
+       return null;
     }
     
     public void actualizar(){

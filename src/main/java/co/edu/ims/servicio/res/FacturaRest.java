@@ -1,7 +1,9 @@
 package co.edu.ims.servicio.res;
 
 import co.ims.soa.sswcompraventa.modelo.Categoria;
+import co.ims.soa.sswcompraventa.modelo.Detalle;
 import co.ims.soa.sswcompraventa.modelo.Factura;
+import co.ims.soa.sswcompraventa.modelo.Producto;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -26,6 +28,8 @@ public class FacturaRest {
     protected EntityManager em;
     
     @Inject SingletonEJB singletonEJB;
+    @Inject DetalleRest detalleRest;
+    @Inject ProductoRest productoRest;
     
     @GET
     @Path("{id}")
@@ -87,6 +91,27 @@ public class FacturaRest {
         q.setParameter("fnumFactura", "%"+numero+"%");
         List<Factura> resultado = q.getResultList();        
         return resultado;            
+    }
+    
+     @PUT
+    @Path("/agregardetalle/{id}")
+    @Produces("application/json")      
+    @Consumes("application/json")
+    public Detalle agregarProducto(@PathParam("id") Integer pId, Integer fId, String pCantidad){
+        Detalle d = new Detalle();
+        Producto p = productoRest.buscar(pId);
+         if (p.getId()==null) {
+             return null;
+         }else{
+         d.setIdProducto(p);
+         d.setCantidad(pCantidad);
+         }
+         Factura f = this.buscar(fId);
+        d.setIdFactura(f);
+        
+        em.persist(d);
+        em.flush();        
+        return d;
     }
     
 }

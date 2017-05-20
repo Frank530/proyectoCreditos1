@@ -22,7 +22,7 @@ public class CategoriaRest {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Categoria buscar(@PathParam("id") Integer pId) {
+    public Categoria buscar(@PathParam("id") Long pId) {
         return em.find(Categoria.class, pId);
     }
 

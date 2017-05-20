@@ -53,17 +53,7 @@ public class DetalleRest {
         return p;
     }
     
-    @PUT
-    @Path("/agregarpelicula/{id}")
-    @Produces("application/json")      
-    @Consumes("application/json")
-    public Detalle agregarProducto(@PathParam("id") Integer pId, Detalle d){       
-        Producto p = productoRest.buscar(pId);
-        d.setIdProducto(p);
-        em.persist(d);
-        em.flush();        
-        return d;
-    }
+   
     
     @GET 
     @Produces("application/json")

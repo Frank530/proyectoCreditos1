@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Productos</title>
+    </h:head>
+    <h:body>
+        <h1>Productos</h1>
+        
+        <div class="ui-g">
+            <p:panel  id="basic" header="Productos">
+                <h:panelGrid columns="4" cellpadding="10">
+                    <p:dataTable id="productos" var="prod" value="#{productoBean.productos}">
+                        <p:column headerText="Id">
+                            <h:outputText value="#{prod.id}" />
+                        </p:column>
+
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{prod.descripcion}" />
+                        </p:column>
+
+                        <p:column headerText="Valor">
+                            <h:outputText value="#{prod.valor}" />
+                        </p:column>
+                        
+                        <p:column headerText="Categoria">
+                            <h:outputText value="#{prod.categoria.descripcion}" />
+                        </p:column>
+                    </p:dataTable> 
+                </h:panelGrid>
+            </p:panel>
+        </div>
+        
+         <h:form> 
+                <p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" style="width: 40%">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <h:panelGrid columns="4">
+                        <h:outputLabel value="Id:"/>
+                        <h:inputText value="#{productoBean.producto.id}"/>
+                        <h:outputLabel value="Descripcion: "/>
+                        <h:inputText value="#{productoBean.producto.descripcion}"  />
+                        <h:outputLabel value="Valor"/>
+                        <h:inputText value="#{productoBean.producto.valor}"  />
+                        <h:outputLabel value="Categoria"/>
+                        <h:inputText value="#{productoBean.producto.categoria.id}"  />
+                        <h:outputLabel value=""/>
+                        <p:commandButton value="Guardar" action="#{productoBean.guardar()}" update="@form, basic"/>                 
+                        <p:commandButton value="Actualizar" action="#{productoBean.actualizar()}" update="@form, basic"/>                 
+                        
+                    </h:panelGrid>
+                </p:fieldset> 
+             
+            </h:form>
+         
+    </h:body>
+</html>
+

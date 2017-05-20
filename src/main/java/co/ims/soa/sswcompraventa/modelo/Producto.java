@@ -23,9 +23,10 @@ public class Producto implements Serializable {
     private int valor;
     @ManyToOne 
     @JoinColumn(name ="fk_categoria")
-    private Categoria idCategoria;
+    private Categoria categoria;
     
     public Producto(){
+        categoria = new Categoria();
         
     }
 
@@ -33,7 +34,7 @@ public class Producto implements Serializable {
         this.id = id;
         this.descripcion = descripcion;
         this.valor = valor;
-        this.idCategoria = idCategoria;
+        this.categoria = idCategoria;
     }
 
     public Long getId() {
@@ -60,11 +61,11 @@ public class Producto implements Serializable {
         this.valor = valor;
     }
     
-    public Categoria getIdCategoria() {
-        return idCategoria;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setIdCategoria(Categoria idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 } 

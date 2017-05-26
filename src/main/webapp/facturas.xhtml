@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Factura</title>
+    </h:head>
+    <h:body>
+        <h1>Factura</h1>
+        <div class="ui-g">
+            <p:panel  id="basic" header="Facturas">
+                <h:panelGrid columns="4" cellpadding="10">
+                            
+                    <p:dataTable id="facturas" var="fac" value="#{facturaBean.factura}">
+                        <p:column headerText="Id">
+                            <h:outputText value="#{fac.id}" />
+                        </p:column>
+                        
+                         <p:column headerText="Numero Factura">
+                             <h:outputText value="#{fac.numFactura}" />
+                        </p:column>
+
+                        <p:column headerText="Fecha">
+                            <h:outputText value="#{fac.fecha}" />
+                        </p:column>
+
+                        <p:column headerText="Cliente">
+                            <h:outputText value="#{fac.idCliente}" />
+                        </p:column>
+                        
+                       
+                    </p:dataTable> 
+                </h:panelGrid>
+            </p:panel>
+        </div>
+          <h:form> 
+                <p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" style="width: 40%">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <h:panelGrid columns="4">
+                        <h:outputLabel value="Id:"/>
+                        <h:inputText value="#{facturaBean.factura.id}"/>
+                          <h:outputLabel value="Numero Factura"/>
+                          <h:inputText value="#{facturaBean.factura.numFactura}"  />
+                        <h:outputLabel value=""/>
+                        <h:outputLabel value="Fecha"/>
+                        <h:inputText value="#{facturaBean.factura.fecha}"  />
+                        <h:outputLabel value="Cliente"/>
+                        <h:inputText value="#{facturaBean.factura.cliente.idCliente}"  />
+                      
+                        <p:commandButton value="Guardar" action="#{facturaBean.guardar()}" update="@form, basic"/>                 
+                        <p:commandButton value="Actualizar" action="#{facturaBean.actualizar()}" update="@form, basic"/>                 
+                        
+                    </h:panelGrid>
+                </p:fieldset> 
+             
+            </h:form>
+    </h:body>
+</html>

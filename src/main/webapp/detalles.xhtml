@@ -4,16 +4,21 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title>Categorias</title>
+        <title>Detalle</title>
     </h:head>
     <h:body>
-        <h1>Categorias</h1>
+        <h1>Detalles</h1>
         <div class="ui-g">
             <p:panel  id="basic" header="Categorias">
-                <h:panelGrid columns="2" cellpadding="10">
+                <h:panelGrid columns="4" cellpadding="10">
+                            
                     <p:dataTable id="categorias" var="det" value="#{detalleBean.detalles}">
                         <p:column headerText="Id">
                             <h:outputText value="#{det.id}" />
+                        </p:column>
+                        
+                         <p:column headerText="Cantidad">
+                            <h:outputText value="#{det.cantidad}" />
                         </p:column>
 
                         <p:column headerText="Factura">
@@ -24,14 +29,32 @@
                             <h:outputText value="#{det.idProducto}" />
                         </p:column>
                         
-                        <p:column headerText="Cantidad">
-                            <h:outputText value="#{det.cantidad}" />
-                        </p:column>
+                       
                     </p:dataTable> 
                 </h:panelGrid>
             </p:panel>
         </div>
-         
+          <h:form> 
+                <p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" style="width: 40%">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <h:panelGrid columns="4">
+                        <h:outputLabel value="Id:"/>
+                        <h:inputText value="#{detalleBean.detalle.id}"/>
+                          <h:outputLabel value="Cantidad"/>
+                        <h:inputText value="#{detalleBean.detalle.cantidad}"  />
+                        <h:outputLabel value=""/>
+                        <h:outputLabel value="Factura: "/>
+                        <h:inputText value="#{detalleBean.detalle.factura.idFactura}"  />
+                        <h:outputLabel value="Producto"/>
+                        <h:inputText value="#{detalleBean.detalle.producto.idProducto}"  />
+                      
+                        <p:commandButton value="Guardar" action="#{detalleBean.guardar()}" update="@form, basic"/>                 
+                        <p:commandButton value="Actualizar" action="#{detalleBean.actualizar()}" update="@form, basic"/>                 
+                        
+                    </h:panelGrid>
+                </p:fieldset> 
+             
+            </h:form>
     </h:body>
 </html>
 

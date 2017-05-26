@@ -8,37 +8,48 @@
     </h:head>
     <h:body>
         <h1>Categorias</h1>
-        <div class="ui-g">
-            <p:panel  id="basic" header="Categorias">
-                <h:panelGrid columns="2" cellpadding="10">
-                    <p:dataTable id="categorias" var="cat" value="#{categoriaBean.categorias}">
-                        <p:column headerText="Id">
-                            <h:outputText value="#{cat.id}" />
-                        </p:column>
+        <h:form id="form">
+            <div class="ui-g">
 
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{cat.descripcion}" />
-                        </p:column>
-                    </p:dataTable> 
-                </h:panelGrid>
-            </p:panel>
-        </div>
-         <h:form>
-                <p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" style="width: 40%">
-                    <p:growl id="growl" showDetail="true" sticky="true" />  
-                    <h:panelGrid columns="2">
-                        <h:outputLabel value="Id:"/>
-                        <h:inputText value="#{categoriaBean.categoria.id}"/>
-                        <h:outputLabel value="Nombre: "/>
-                        <h:inputText value="#{categoriaBean.categoria.descripcion}"  />
-                        <h:outputLabel value=""/>
-                        <p:commandButton value="Guardar" action="#{categoriaBean.guardar()}" update="@form"/>                 
-                        <p:commandButton value="Actualizar" action="#{categoriaBean.actualizar()}" update="@form"/>                 
-                        
+                <p:panel  id="basic" header="Categorias">
+
+                    <h:panelGrid columns="3" cellpadding="10">
+                        <p:growl id="msg"/>
+                        <p:dataTable id="categorias" var="cat" value="#{categoriaBean.categorias}" editable="true" >
+                            <p:ajax event="rowEdit" listener="#{categoriaBean.actualizar}" update=":form:msg"/>
+                            <p:ajax event="rowEditCancel" listener="#{categoriaBean.cancelar}" update=":form:msg"/>
+                            <p:column headerText="Id">
+                                <h:outputText value="#{cat.id}" />
+                            </p:column>
+                                <p:column headerText="Nombre">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{cat.descripcion}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{categoriaBean.descripcion}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column>
+                                <p:rowEditor/>
+                            </p:column>
+                        </p:dataTable> 
                     </h:panelGrid>
-                </p:fieldset> 
-             
-            </h:form>
+
+                </p:panel>
+            </div>
+            <p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" style="width: 40%">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="Descripcion: "/>
+                        <h:inputText value="#{categoriaBean.categoria.descripcion}"  />
+                        <p:commandButton value="Guardar" action="#{categoriaBean.guardar()}" update="@form, basic" />                 
+                    </h:panelGrid>
+            </p:fieldset> 
+        </h:form>
+
+                
     </h:body>
 </html>
 

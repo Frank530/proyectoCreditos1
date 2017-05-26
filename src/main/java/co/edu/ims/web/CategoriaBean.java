@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.event.RowEditEvent;
 
 /**
  * @author Usuario 2
@@ -20,7 +21,8 @@ public class CategoriaBean {
     
     private List<Categoria> categorias;    
     private Categoria categoria;
-
+    private String descripcion;
+    
     public CategoriaBean() {
     }
     
@@ -30,20 +32,34 @@ public class CategoriaBean {
         categoria = new Categoria();
     }
     
-    public void guardar(){
+    public String guardar(){
         System.out.println("guardar...");
         categoriaRest.agregar(categoria);        
         init();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Categoria",  "Se ha guardado correctamente") );
+        return null;
     }
+  
     
-    public void actualizar(){
-        System.out.println("Actualizar...");
+//    public void actualizar(){
+//        System.out.println("Actualizar...");
+//        categoriaRest.actualizar(categoria);
+//        init();
+//         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Categoria",  "Se ha actualizado correctamente") );
+//    }
+    
+    public void actualizar(RowEditEvent event){
+        categoria = (Categoria) event.getObject();
+        categoria.setDescripcion(descripcion);
         categoriaRest.actualizar(categoria);
         init();
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Categoria",  "Se ha actualizado correctamente") );
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Se ha actualizado correctamente") );
     }
-
+    
+    public void cancelar(RowEditEvent event){
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Evento cancelado!!") );
+    }
+    
     public List<Categoria> getCategorias() {
         return categorias;
     }
@@ -59,5 +75,23 @@ public class CategoriaBean {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
+    public CategoriaRest getCategoriaRest() {
+        return categoriaRest;
+    }
+
+    public void setCategoriaRest(CategoriaRest categoriaRest) {
+        this.categoriaRest = categoriaRest;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
     
+    
+ 
 }

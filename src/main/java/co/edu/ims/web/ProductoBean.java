@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.event.RowEditEvent;
 
 /**
  * @author Usuario 2
@@ -47,6 +48,8 @@ public class ProductoBean {
        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Advertencia",  "Categoria no encontrada") );
        return null;
     }
+    
+    
     
     public void actualizar(){
         System.out.println("Actualizar...");

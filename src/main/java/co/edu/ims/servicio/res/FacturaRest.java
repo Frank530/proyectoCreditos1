@@ -1,0 +1,112 @@
+package co.edu.ims.servicio.res;
+
+
+
+import co.ims.soa.sswcompraventa.modelo.Factura;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+
+@Stateless
+@Path("/facturas")
+public class FacturaRest {
+    
+    @PersistenceContext(unitName = "compraventaPU")
+    protected EntityManager em;
+    
+    @Inject SingletonEJB singletonEJB;
+    @Inject DetalleRest detalleRest;
+    @Inject ProductoRest productoRest;
+    
+    @GET
+    @Path("{id}")
+    @Produces("application/json")
+    public Factura buscar(@PathParam("id") Long pId){
+        return em.find(Factura.class, pId);    
+    }
+    
+    @GET    
+    @Produces("application/json")
+    public List<Factura> buscarTodos(){
+        String jpql = "SELECT fac FROM Factura fac";
+        TypedQuery <Factura> f = em.createQuery(jpql, Factura.class);
+        List<Factura> resultado = f.getResultList();
+        return resultado;    
+    }
+    
+    @PUT
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Factura agregar(Factura entity){
+        em.persist(entity);
+        em.flush();
+        return entity;
+    }
+    
+    
+    @DELETE
+    @Path("{id}")
+    @Produces("application/json")
+    public Response elminar(@PathParam("id") Long pId){
+        Factura f = em.find(Factura.class, pId);
+        if( f != null){
+            em.remove(f);
+        }
+        return Response.noContent().build();
+    }
+
+    @POST
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Factura actualizar(Factura f){
+        em.merge(f);  
+        singletonEJB.incrementarCodigo();
+        System.out.println(singletonEJB.getCodigoOperacion());
+        return f;
+    }
+ 
+    @GET
+    @Path("/descripcion/{nombre}")
+    @Produces("application/json")       
+    public List<Factura> buscarPorNumero(@PathParam("numero") String numero){                
+        String jpql = "SELECT f FROM Factura f WHERE f.numFactura LIKE :fnumFactura ";        
+        TypedQuery<Factura> q = em.createQuery(jpql, Factura.class);
+        q.setParameter("fnumFactura", "%"+numero+"%");
+        List<Factura> resultado = q.getResultList();        
+        return resultado;            
+    }
+    
+//    @PUT
+//    @Path("/agregardetalle/{id}")
+//    @Produces("application/json")      
+//    @Consumes("application/json")
+//    public Detalle agregarProducto(@PathParam("id") Integer pId, Integer fId, String pCantidad){
+//        Detalle d = new Detalle();
+//        Producto p = productoRest.buscar(pId);
+//         if (p.getId()==null) {
+//             return null;
+//         }else{
+//         d.setIdProducto(p);
+//         d.setCantidad(pCantidad);
+//         }
+//         Factura f = this.buscar(fId);
+//        d.setIdFactura(f);
+//        
+//        em.persist(d);
+//        em.flush();        
+//        return d;
+//    }
+    
+}
